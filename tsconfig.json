@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "ES2022",
+    "target": "ES2024",
+    "sourceMap": true,        // Genera els fitxers .js.map per poder fer debugging de TypeScript
+    "strict": true,           // Activa totes les comprovacions de tipat estricte
+    "rootDir": "./src",           // Estableix l'arrel del codi font des de qualsevol directori del projecte
+    "moduleDetection": "force"
+  },
+  // Especifica quines carpetes o fitxers ha de processar el compilador
+  "include": [
+    "src/*"  // Canvia-ho per "**/*" si vols incloure qualsevol fitxer del projecte
+  ],
+  // Especifica quines carpetes ha d'ignorar el compilador
+  "exclude": [
+    "node_modules",           // No compilar les llibreries externes
+    "dist"                    // Evita processar els fitxers ja compilats (evita bucles infinits)
+  ]
+}
