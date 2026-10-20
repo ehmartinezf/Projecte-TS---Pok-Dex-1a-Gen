@@ -5,6 +5,8 @@
 //    valida en execució que l'API realment retorni aquesta estructura.
 // ==========================================================
 
+import * as url from "node:url";
+
 export interface IPokeApiListItem {
     name: string;
     url: string;
@@ -118,6 +120,41 @@ export const POKEMON_TYPES: Record<PokemonTypeName, PokemonType> = {
 //    perquè el projecte compili. Substitueix-los per la implementació real.
 // ==========================================================
 
+
+export class BasePokemon {
+    private _id: number;
+    private _name: string;
+    private _url: string;
+
+
+    constructor(item: IPokeApiListItem) {
+        this._id = Number(item.url.split("/").filter(Boolean).pop());
+        this._name = item.name;
+        this._url = item.url;
+    }
+
+    get id(): number {
+        return this._id;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get url(): string {
+        return this._url;
+    }
+
+    get formattedId(): string {
+        return `#${String(this.id).padStart(3, "0")}`;
+    }
+
+    get displayName(): string {
+        let primeraMajus: string = this._name.charAt(0).toUpperCase();
+        let resta: string = this._name.substring(1).toLowerCase();
+        return primeraMajus + resta;
+    }
+}
 /**
  * EXERCICI 1: class BasePokemon  -> És la classe PARE. Representa un Pokémon de la llista general.
  *

@@ -2,6 +2,9 @@
 // EXERCICI 1: Llistar els 151 Pokémon
 // ==========================================================
 // TODO: Implementa la lògica de l'exercici 1 seguint els requisits
+import {BasePokemon} from "./models.js";
+const mapaPokemon = new Map<number, Models.BasePokemon>();
+
 
 
 
