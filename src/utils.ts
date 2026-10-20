@@ -11,7 +11,6 @@ import * as Models from "./models.js";
 export function mostrarEstat(missatge: string, tipus: Models.EstatTipus): void {
     const statusContainer = document.getElementById("status-message");
     if (!statusContainer) return;
-
     statusContainer.textContent = missatge;
     statusContainer.className = tipus; // el CSS defineix #status-message.loading / .error
 }
@@ -35,7 +34,6 @@ export function netejarCercador(): void {
     if (searchInput) {
         searchInput.value = "";
     }
-
     const items = document.querySelectorAll<HTMLLIElement>("#pokemon-list li");
     items.forEach((li) => li.classList.remove("hidden"));
 }
@@ -94,7 +92,32 @@ export function reproduirCrit(soundUrl: string): void {
  *    (usa els getters formattedId i name).
  *  - Afegir el <li> al contenidor amb appendChild.
  */
+
+
+
+interface Pokemon {
+    id: string;
+    formattedId: string;
+    name: string;
+}
+
+
+function renderPokemonList(pokemons: Pokemon[]): void {
+    const pokemonListContainer = document.getElementById('pokemon-list') as HTMLUListElement;
+    if (!pokemonListContainer) return;
+    pokemonListContainer.innerHTML = '';
+    pokemons.forEach((pokemon: Pokemon) => {
+        const li = document.createElement('li');
+        li.dataset.id = String(pokemon.id);
+        li.innerHTML = `<strong>${pokemon.formattedId}</strong> - ${pokemon.name}`;
+        pokemonListContainer.appendChild(li);
+    });
+}
+
+
+
 // TODO: Implementa la lògica de l'exercici 1 seguint els requisits
+
 
 
 /**
