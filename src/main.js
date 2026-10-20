@@ -1,5 +1,10 @@
+import * as Utils from "./utils.js";
 const mapaPokemon = new Map();
-export {};
+const btnCarregarPokemon = document.getElementById("btn-show-all");
+btnCarregarPokemon.addEventListener("click", carregarLlistaPokemon);
+async function carregarLlistaPokemon() {
+    Utils.mostrarEstat("Carregant llista pokemon...", "loading");
+}
 // ==========================================================
 // EXERCICI 2: Cercador en temps real
 // ==========================================================
