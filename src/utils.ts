@@ -95,26 +95,19 @@ export function reproduirCrit(soundUrl: string): void {
 
 
 
-interface Pokemon {
-    id: string;
-    formattedId: string;
-    name: string;
-}
-
-
-function renderPokemonList(pokemons: Pokemon[]): void {
+function renderitzarLlistaNoms(llista: Models.BasePokemon[]): void {
     const pokemonListContainer = document.getElementById('pokemon-list') as HTMLUListElement;
     if (!pokemonListContainer) return;
     pokemonListContainer.innerHTML = '';
-    pokemons.forEach((pokemon: Pokemon) => {
+    llista.forEach((pokemon: Models.BasePokemon) => {
         const li = document.createElement('li');
         li.dataset.id = String(pokemon.id);
+        li.dataset.name = pokemon.name;
+        li.dataset.url = pokemon.url;
         li.innerHTML = `<strong>${pokemon.formattedId}</strong> - ${pokemon.name}`;
         pokemonListContainer.appendChild(li);
     });
 }
-
-
 
 // TODO: Implementa la lògica de l'exercici 1 seguint els requisits
 
