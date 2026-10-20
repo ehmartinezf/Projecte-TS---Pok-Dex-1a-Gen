@@ -65,14 +65,32 @@ export function reproduirCrit(soundUrl) {
         mostrarEstat("No s'ha pogut reproduir el crit.", "error");
     });
 }
-function renderPokemonList(pokemons) {
+// ==========================================================
+// PART B: FUNCIONS QUE HAS D'IMPLEMENTAR TU
+// ==========================================================
+/**
+ * EXERCICI 1
+ * Renderitza la llista de Pokémon dins de <ul id="pokemon-list">.
+ *
+ * Requisits:
+ *  - Obtenir una instància del contenidor on es mostra la llista de pokémons.
+ *  - Buidar el contenidor abans de pintar.
+ *  - Per a cada pokémon, crear un <li> amb createElement.
+ *  - Desar id a dataset: li.dataset.id
+ *  - El text del <li> ha de ser: <strong>#025</strong> - pikachu
+ *    (usa els getters formattedId i name).
+ *  - Afegir el <li> al contenidor amb appendChild.
+ */
+function renderitzarLlistaNoms(llista) {
     const pokemonListContainer = document.getElementById('pokemon-list');
     if (!pokemonListContainer)
         return;
     pokemonListContainer.innerHTML = '';
-    pokemons.forEach((pokemon) => {
+    llista.forEach((pokemon) => {
         const li = document.createElement('li');
         li.dataset.id = String(pokemon.id);
+        li.dataset.name = pokemon.name;
+        li.dataset.url = pokemon.url;
         li.innerHTML = `<strong>${pokemon.formattedId}</strong> - ${pokemon.name}`;
         pokemonListContainer.appendChild(li);
     });
