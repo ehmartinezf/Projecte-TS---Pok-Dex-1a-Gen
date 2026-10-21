@@ -4,6 +4,7 @@
 // TODO: Implementa la lògica de l'exercici 1 seguint els requisits
 import * as Models from "./models.js";
 import * as Utils from "./utils.js"
+import {BasePokemon} from "./models.js";
 const mapaPokemon = new Map<number, Models.BasePokemon>();
 
 const btnCarregarPokemon = document.getElementById("btn-show-all") as HTMLButtonElement;
@@ -12,6 +13,11 @@ btnCarregarPokemon.addEventListener("click", carregarLlistaPokemon);
 
 async function carregarLlistaPokemon() {
     Utils.mostrarEstat("Carregant llista pokemon...", "loading");
+    const resposta = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    if (!resposta.ok){
+        Utils.mostrarEstat("Error carregant la llista de pokemons", "error");
+    }
+    const pokemons: BasePokemon[] = await resposta.json();
 }
 
 

@@ -4,6 +4,11 @@ const btnCarregarPokemon = document.getElementById("btn-show-all");
 btnCarregarPokemon.addEventListener("click", carregarLlistaPokemon);
 async function carregarLlistaPokemon() {
     Utils.mostrarEstat("Carregant llista pokemon...", "loading");
+    const resposta = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    if (!resposta.ok) {
+        Utils.mostrarEstat("Error carregant la llista de pokemons", "error");
+    }
+    const pokemons = await resposta.json();
 }
 // ==========================================================
 // EXERCICI 2: Cercador en temps real
