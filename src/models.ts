@@ -6,6 +6,7 @@
 // ==========================================================
 
 import * as url from "node:url";
+import * as url from "node:url";
 
 export interface IPokeApiListItem {
     name: string;
@@ -178,7 +179,45 @@ export class BasePokemon {
 
 
 
+export class DetailedPokemon extends BasePokemon{
+    private _weightKg: number;
+    private _imageUrl: string;
+    private _types: PokemonType[];
+    private _stats: Stat[];
+    private _cryUrl: string | null;
 
+    constructor(data: IPokeApiDetail, url: string) {
+        super({name: data.name, url: url});
+        this._weightKg = data.weight / 10;
+        this._imageUrl = data.sprites.front_default ?? "";
+        this._types = data.types
+            .map((t) => POKEMON_TYPES[t.type.name as PokemonTypeName])
+            .filter((type): type is PokemonType => type !== undefined);
+        this._stats = data.stats.map((s): Stat => [s.stat.name, s.base_stat]);
+        this._cryUrl = data.cries?.latest || null;
+    }
+
+
+    get weightKg(): number {
+        return this._weightKg;
+    }
+
+    get imageUrl(): string {
+        return this._imageUrl;
+    }
+
+    get types(): PokemonType[] {
+        return this._types;
+    }
+
+    get stats(): Stat[] {
+        return this._stats;
+    }
+
+    get cryUrl(): string | null {
+        return this._cryUrl;
+    }
+}
 /**
  * EXERCICI 3: class DetailedPokemon
  *

@@ -81,10 +81,11 @@ export function reproduirCrit(soundUrl) {
  *    (usa els getters formattedId i name).
  *  - Afegir el <li> al contenidor amb appendChild.
  */
-function renderitzarLlistaNoms(llista) {
+export function renderitzarLlistaNoms(llista) {
     const pokemonListContainer = document.getElementById('pokemon-list');
-    if (!pokemonListContainer)
+    if (!pokemonListContainer) {
         return;
+    }
     pokemonListContainer.innerHTML = '';
     llista.forEach((pokemon) => {
         const li = document.createElement('li');
@@ -96,6 +97,31 @@ function renderitzarLlistaNoms(llista) {
     });
 }
 // TODO: Implementa la lògica de l'exercici 1 seguint els requisits
+const targeta = document.getElementById("pokemon-detail");
+export function renderitzarDetallCard(pokemon) {
+    if (!targeta) {
+        return;
+    }
+    const estadistiques = pokemon.stats.map((stat) => {
+        return `<div class="stat-box"><span>${stat[0]}</span><strong>${stat[1]}</strong></div>`;
+    });
+    targeta.innerHTML = `
+    <div class="detail-card">
+        <h3>${pokemon.formattedId} ${pokemon.displayName}</h3>
+        <img src=${pokemon.imageUrl} alt=${pokemon.displayName}>
+        ${pokemon.cryUrl !== null ? '<button id="btn-play-cry" class="btn-cry">🔊 Escolta el crit</button>' : ''}
+        <p><strong>Pes:</strong>${pokemon.weightKg} kg</p>
+        <p><strong>Tipus:</strong>${pokemon.types.map(t => t.label).join(",")}</p>
+        <div class="stats-grid">
+            ${estadistiques}
+        </div>
+    </div>
+`;
+    const botoCrit = document.getElementById("btn-play-cry");
+    botoCrit?.addEventListener("click", () => {
+        reproduirCrit(pokemon.cryUrl ?? "");
+    });
+}
 /**
  * EXERCICI 3
  * Renderitza la targeta de detall dins de <div id="pokemon-detail">.

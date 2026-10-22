@@ -99,6 +99,38 @@ export class BasePokemon {
  *   get url: retorna l'atribut privat corresponent.
  *   get formattedId: retorna l'atribut id en format "#025" (3 xifres, amb zeros a l'esquerra. Pista: padStart).
  */
+export class DetailedPokemon extends BasePokemon {
+    _weightKg;
+    _imageUrl;
+    _types;
+    _stats;
+    _cryUrl;
+    constructor(data, url) {
+        super({ name: data.name, url: url });
+        this._weightKg = data.weight / 10;
+        this._imageUrl = data.sprites.front_default ?? "";
+        this._types = data.types
+            .map((t) => POKEMON_TYPES[t.type.name])
+            .filter((type) => type !== undefined);
+        this._stats = data.stats.map((s) => [s.stat.name, s.base_stat]);
+        this._cryUrl = data.cries?.latest || null;
+    }
+    get weightKg() {
+        return this._weightKg;
+    }
+    get imageUrl() {
+        return this._imageUrl;
+    }
+    get types() {
+        return this._types;
+    }
+    get stats() {
+        return this._stats;
+    }
+    get cryUrl() {
+        return this._cryUrl;
+    }
+}
 /**
  * EXERCICI 3: class DetailedPokemon
  *
