@@ -119,7 +119,7 @@ export function renderitzarDetallCard(pokemon: Models.DetailedPokemon) {
         return;
     }
     const estadistiques = pokemon.stats.map((stat)=> {
-        return `<div class="stat-box"><span>${stat[0]}</span><strong>${stat[1]}</strong></div>`;
+        return `<div class="stat-box"><span>${stat[0].toUpperCase()}</span><strong>${stat[1]}</strong></div>`;
     });
 
     targeta.innerHTML = `
