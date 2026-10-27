@@ -130,7 +130,7 @@ export function renderitzarDetallCard(pokemon: Models.DetailedPokemon) {
         <p><strong>Pes:</strong>${pokemon.weightKg} kg</p>
         <p><strong>Tipus:</strong>${pokemon.types.map(t => t.label).join(",")}</p>
         <div class="stats-grid">
-            ${estadistiques}
+            ${estadistiques.join("")}
         </div>
     </div>
 `;

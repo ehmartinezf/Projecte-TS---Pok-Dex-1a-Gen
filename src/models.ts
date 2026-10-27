@@ -6,7 +6,6 @@
 // ==========================================================
 
 import * as url from "node:url";
-import * as url from "node:url";
 
 export interface IPokeApiListItem {
     name: string;
