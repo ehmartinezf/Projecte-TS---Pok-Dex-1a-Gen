@@ -1,3 +1,4 @@
+import * as Models from "./models.js";
 // ==========================================================
 // PART A: FUNCIONS JA IMPLEMENTADES (no cal modificar-les)
 // ==========================================================
@@ -144,7 +145,18 @@ export function renderitzarDetallCard(pokemon) {
  *  - El botó del crit només s'ha de pintar si pokemon.cryUrl no és null.
  *  - Un cop pintat l'HTML, afegeix el listener de clic al botó i crida reproduirCrit().
  */
-// TODO: Implementa la lògica de l'exercici 3 seguint els requisits
+export function generarBotonsTipus() {
+    const contenidor = document.getElementById("type-filter-container");
+    contenidor.innerHTML = "";
+    for (const [key, pokemonType] of Object.entries(Models.POKEMON_TYPES)) {
+        const boto = document.createElement("button");
+        boto.classList.add("btn-type");
+        boto.dataset.type = pokemonType.id;
+        boto.style.backgroundColor = pokemonType.color;
+        boto.innerText = pokemonType.label;
+        contenidor.appendChild(boto);
+    }
+}
 /**
  * EXERCICI 4
  * Genera un botó per a cada tipus dins de <div id="type-filter-container">.
@@ -159,5 +171,4 @@ export function renderitzarDetallCard(pokemon) {
  *       btn.textContent = el label del tipus
  *  - Recorda afegir el botó correctament al contenidor
  */
-// TODO: Implementa la lògica de l'exercici 4 seguint els requisits
 //# sourceMappingURL=utils.js.map

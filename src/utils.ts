@@ -163,7 +163,18 @@ export function renderitzarDetallCard(pokemon: Models.DetailedPokemon) {
  *  - Un cop pintat l'HTML, afegeix el listener de clic al botó i crida reproduirCrit().
  */
 
-// TODO: Implementa la lògica de l'exercici 3 seguint els requisits
+export function generarBotonsTipus(): void{
+    const contenidor = document.getElementById("type-filter-container") as HTMLDivElement;
+    contenidor.innerHTML = "";
+    for (const [key, pokemonType] of Object.entries(Models.POKEMON_TYPES)) {
+        const boto = document.createElement("button");
+        boto.classList.add("btn-type");
+        boto.dataset.type = pokemonType.id;
+        boto.style.backgroundColor = pokemonType.color;
+        boto.innerText = pokemonType.label;
+        contenidor.appendChild(boto);
+    }
+}
 
 
 /**
@@ -180,7 +191,5 @@ export function renderitzarDetallCard(pokemon: Models.DetailedPokemon) {
  *       btn.textContent = el label del tipus
  *  - Recorda afegir el botó correctament al contenidor
  */
-
-// TODO: Implementa la lògica de l'exercici 4 seguint els requisits
 
 
