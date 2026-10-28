@@ -139,6 +139,10 @@ contenidor.addEventListener("click", (event) => {
     if (!botoPremut) {
         return;
     }
+    if (mapaPokemon.size === 0) {
+        Utils.mostrarEstat("Primer carrega la llista de Pokémon", "error");
+        return;
+    }
     let tipus;
 
     if (!botoActiu) {
