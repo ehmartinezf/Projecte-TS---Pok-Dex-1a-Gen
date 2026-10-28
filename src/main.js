@@ -4,14 +4,17 @@
 // TODO: Implementa la lògica de l'exercici 1 seguint els requisits
 import * as Utils from "./utils.js";
 import { BasePokemon, DetailedPokemon } from "./models.js";
-import { renderitzarLlistaNoms } from "./utils.js";
+import { marcarItemActiu, renderitzarLlistaNoms } from "./utils.js";
 const mapaPokemon = new Map();
 const pokemonFiltrats = new Map();
-let tipusActiu = null;
 const btnCarregarPokemon = document.getElementById("btn-show-all");
 const input = document.getElementById("search-input");
 btnCarregarPokemon.addEventListener("click", carregarLlistaPokemon);
 async function carregarLlistaPokemon() {
+    ultimBoto?.classList.remove("active");
+    ultimBoto = null;
+    botoActiu = false;
+    pokemonFiltrats.clear();
     Utils.netejarCercador();
     Utils.mostrarEstat("Carregant llista pokemon...", "loading");
     try {
@@ -41,7 +44,7 @@ async function carregarLlistaPokemon() {
 function cercadorPokemon() {
     const text = input.value.trim().toLowerCase();
     const mapaDades = botoActiu ? pokemonFiltrats : mapaPokemon;
-    const resultats = Array.from(mapaDades.values()).filter(pokemon => pokemon.name.toLowerCase().includes(text) || pokemon.id === parseInt(text, 10));
+    const resultats = Array.from(mapaDades.values()).filter(pokemon => pokemon.name.toLowerCase().includes(text) || pokemon.id === Number(text));
     Utils.renderitzarLlistaNoms(resultats);
 }
 input.addEventListener("input", cercadorPokemon);
@@ -57,9 +60,9 @@ llistaPokemon.addEventListener("click", (event) => {
     if (!item || !llistaPokemon.contains(item) || item.classList.contains("placeholder")) {
         return;
     }
-    Utils.marcarItemActiu(item);
+    marcarItemActiu(item);
     const id = Number(item.dataset.id);
-    const pokemon = mapaPokemon.get(id);
+    const pokemon = mapaPokemon.get(id) ?? pokemonFiltrats.get(id);
     if (!pokemon) {
         return;
     }
@@ -81,13 +84,11 @@ async function carregarDetallPokemon(id, url) {
             const dades = await resposta.json();
             pokemon = new DetailedPokemon(dades, url);
             cachePokemon.set(id, pokemon);
+            Utils.amagarEstat();
         }
         catch (error) {
             console.error(error);
             Utils.mostrarEstat("No s'ha pogut carregar els detalls del Pokémon", "error");
-        }
-        finally {
-            Utils.amagarEstat();
         }
     }
     if (pokemon) {
@@ -105,24 +106,28 @@ let botoActiu = false;
 let ultimBoto;
 const contenidor = document.getElementById("type-filter-container");
 contenidor.addEventListener("click", (event) => {
-    let botoPremut = event.target;
+    let element = event.target;
+    let botoPremut = element.closest("button") || null;
+    if (!botoPremut) {
+        return;
+    }
     let tipus;
     if (!botoActiu) {
-        botoPremut.classList.add("active");
+        botoPremut?.classList.add("active");
         ultimBoto = botoPremut;
         botoActiu = true;
-        tipus = botoPremut.dataset.type;
+        tipus = botoPremut?.dataset.type;
     }
     else {
         if (botoPremut === ultimBoto) {
             botoActiu = false;
-            botoPremut.classList.remove("active");
+            botoPremut?.classList.remove("active");
         }
         else {
-            ultimBoto.classList.remove("active");
-            botoPremut.classList.add("active");
+            ultimBoto?.classList.remove("active");
+            botoPremut?.classList.add("active");
             ultimBoto = botoPremut;
-            tipus = botoPremut.dataset.type;
+            tipus = botoPremut?.dataset.type;
         }
     }
     if (!botoActiu) {
@@ -154,13 +159,11 @@ async function carregarPokemonPerTipus(tipus) {
         renderitzarLlistaNoms(llistaPokemonsResultants);
         Utils.netejarCercador();
         Utils.netejarDetallCard();
+        Utils.amagarEstat();
     }
     catch (error) {
         console.error(error);
         Utils.mostrarEstat("No s'ha pogut carregar els pokemon del tipus" + tipus, "error");
-    }
-    finally {
-        Utils.amagarEstat();
     }
 }
 //# sourceMappingURL=main.js.map

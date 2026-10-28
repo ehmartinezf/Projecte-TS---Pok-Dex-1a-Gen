@@ -148,12 +148,12 @@ export function renderitzarDetallCard(pokemon) {
 export function generarBotonsTipus() {
     const contenidor = document.getElementById("type-filter-container");
     contenidor.innerHTML = "";
-    for (const [key, pokemonType] of Object.entries(Models.POKEMON_TYPES)) {
+    for (const pokemonType of Object.values(Models.POKEMON_TYPES)) {
         const boto = document.createElement("button");
         boto.classList.add("btn-type");
         boto.dataset.type = pokemonType.id;
         boto.style.backgroundColor = pokemonType.color;
-        boto.innerText = pokemonType.label;
+        boto.textContent = pokemonType.label;
         contenidor.appendChild(boto);
     }
 }

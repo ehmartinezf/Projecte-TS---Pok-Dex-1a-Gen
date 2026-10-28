@@ -10,7 +10,6 @@ import {marcarItemActiu, renderitzarLlistaNoms} from "./utils.js";
 
 const mapaPokemon = new Map<number, Models.BasePokemon>();
 const pokemonFiltrats = new Map<number, Models.BasePokemon>();
-let tipusActiu: string | null = null;
 
 const btnCarregarPokemon = document.getElementById("btn-show-all") as HTMLButtonElement;
 const input = document.getElementById("search-input") as HTMLInputElement;
@@ -18,6 +17,10 @@ const input = document.getElementById("search-input") as HTMLInputElement;
 btnCarregarPokemon.addEventListener("click", carregarLlistaPokemon);
 
 async function carregarLlistaPokemon(): Promise<void> {
+    ultimBoto?.classList.remove("active");
+    ultimBoto = null;
+    botoActiu = false;
+    pokemonFiltrats.clear();
     Utils.netejarCercador();
     Utils.mostrarEstat("Carregant llista pokemon...", "loading");
     try {
@@ -55,7 +58,7 @@ function cercadorPokemon() {
     const mapaDades = botoActiu ? pokemonFiltrats : mapaPokemon;
 
     const resultats = Array.from(mapaDades.values()).filter(pokemon =>
-        pokemon.name.toLowerCase().includes(text) || pokemon.id === parseInt(text, 10)
+        pokemon.name.toLowerCase().includes(text) || pokemon.id === Number(text)
     );
 
     Utils.renderitzarLlistaNoms(resultats);
@@ -79,9 +82,9 @@ llistaPokemon.addEventListener("click", (event) => {
         return;
     }
 
-    Utils.marcarItemActiu(item);
+    marcarItemActiu(item);
     const id = Number(item.dataset.id);
-    const pokemon = mapaPokemon.get(id);
+    const pokemon = mapaPokemon.get(id) ?? pokemonFiltrats.get(id);
 
     if (!pokemon) {
         return;
@@ -104,13 +107,11 @@ async function carregarDetallPokemon(id: number, url: string): Promise<void> {
             const dades = await resposta.json() as Models.IPokeApiDetail;
             pokemon = new DetailedPokemon(dades, url);
             cachePokemon.set(id, pokemon);
-
+            Utils.amagarEstat();
         } catch (error) {
             console.error(error);
             Utils.mostrarEstat("No s'ha pogut carregar els detalls del Pokémon", "error");
 
-        } finally {
-            Utils.amagarEstat();
         }
     }
     if (pokemon) {
@@ -130,26 +131,30 @@ Utils.generarBotonsTipus();
 // ==========================================================
 
 let botoActiu = false;
-let ultimBoto: HTMLButtonElement;
+let ultimBoto: HTMLButtonElement | null;
 const contenidor = document.getElementById("type-filter-container") as HTMLDivElement;
 contenidor.addEventListener("click", (event) => {
-    let botoPremut = event.target as HTMLButtonElement;
+    let element = event.target as HTMLButtonElement;
+    let botoPremut = element.closest("button") || null;
+    if (!botoPremut) {
+        return;
+    }
     let tipus;
 
     if (!botoActiu) {
-        botoPremut.classList.add("active");
+        botoPremut?.classList.add("active");
         ultimBoto = botoPremut;
         botoActiu = true;
-        tipus = botoPremut.dataset.type;
+        tipus = botoPremut?.dataset.type;
     } else {
         if (botoPremut === ultimBoto){
             botoActiu = false;
-            botoPremut.classList.remove("active");
+            botoPremut?.classList.remove("active");
         } else {
-            ultimBoto.classList.remove("active");
-            botoPremut.classList.add("active");
+            ultimBoto?.classList.remove("active");
+            botoPremut?.classList.add("active");
             ultimBoto = botoPremut;
-            tipus = botoPremut.dataset.type;
+            tipus = botoPremut?.dataset.type;
         }
     }
 
@@ -182,11 +187,10 @@ async function carregarPokemonPerTipus(tipus: string) {
         renderitzarLlistaNoms(llistaPokemonsResultants);
         Utils.netejarCercador();
         Utils.netejarDetallCard();
+        Utils.amagarEstat();
     } catch (error) {
         console.error(error);
         Utils.mostrarEstat("No s'ha pogut carregar els pokemon del tipus" + tipus, "error");
 
-    } finally {
-        Utils.amagarEstat();
     }
 }
