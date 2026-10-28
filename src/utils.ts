@@ -110,9 +110,6 @@ export function renderitzarLlistaNoms(llista: Models.BasePokemon[]): void {
     });
 }
 
-// TODO: Implementa la lògica de l'exercici 1 seguint els requisits
-
-
 const targeta = document.getElementById("pokemon-detail") as HTMLDivElement;
 export function renderitzarDetallCard(pokemon: Models.DetailedPokemon) {
     if (!targeta){

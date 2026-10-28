@@ -166,5 +166,5 @@ export class DetailedPokemon extends BasePokemon {
  *   get cryUrl: retorna l'atribut privat corresponent (pot ser string o null).
  *   get types: retorna un array d'objectes PokemonType
  *   get stats: retorna un array de type Stat
- */
+ */ 
 //# sourceMappingURL=models.js.map

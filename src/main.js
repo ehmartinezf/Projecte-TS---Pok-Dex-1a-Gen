@@ -1,7 +1,6 @@
 // ==========================================================
 // EXERCICI 1: Llistar els 151 Pokémon
 // ==========================================================
-// TODO: Implementa la lògica de l'exercici 1 seguint els requisits
 import * as Utils from "./utils.js";
 import { BasePokemon, DetailedPokemon } from "./models.js";
 import { marcarItemActiu, renderitzarLlistaNoms } from "./utils.js";
@@ -40,7 +39,6 @@ async function carregarLlistaPokemon() {
 // ==========================================================
 // EXERCICI 2: Cercador en temps real
 // ==========================================================
-// TODO: Implementa la lògica de l'exercici 2 seguint els requisits
 function cercadorPokemon() {
     const text = input.value.trim().toLowerCase();
     const mapaDades = botoActiu ? pokemonFiltrats : mapaPokemon;
@@ -51,7 +49,6 @@ input.addEventListener("input", cercadorPokemon);
 // ==========================================================
 // EXERCICI 3: Detall del Pokémon, cache i crit
 // ==========================================================
-// TODO: Implementa la lògica de l'exercici 3 seguint els requisits
 const cachePokemon = new Map();
 const llistaPokemon = document.getElementById("pokemon-list");
 llistaPokemon.addEventListener("click", (event) => {

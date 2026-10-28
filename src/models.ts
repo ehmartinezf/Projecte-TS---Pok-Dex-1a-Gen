@@ -251,6 +251,3 @@ export class DetailedPokemon extends BasePokemon{
  *   get types: retorna un array d'objectes PokemonType
  *   get stats: retorna un array de type Stat
  */
-
-
-

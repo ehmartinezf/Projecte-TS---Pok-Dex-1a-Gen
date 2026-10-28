@@ -97,7 +97,6 @@ export function renderitzarLlistaNoms(llista) {
         pokemonListContainer.appendChild(li);
     });
 }
-// TODO: Implementa la lògica de l'exercici 1 seguint els requisits
 const targeta = document.getElementById("pokemon-detail");
 export function renderitzarDetallCard(pokemon) {
     if (!targeta) {

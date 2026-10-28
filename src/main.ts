@@ -1,11 +1,10 @@
 // ==========================================================
 // EXERCICI 1: Llistar els 151 Pokémon
 // ==========================================================
-// TODO: Implementa la lògica de l'exercici 1 seguint els requisits
 
 import * as Models from "./models.js";
 import * as Utils from "./utils.js"
-import {BasePokemon, DetailedPokemon, IPokeApiListResponse} from "./models.js";
+import {BasePokemon, DetailedPokemon} from "./models.js";
 import {marcarItemActiu, renderitzarLlistaNoms} from "./utils.js";
 
 const mapaPokemon = new Map<number, Models.BasePokemon>();
@@ -50,7 +49,6 @@ async function carregarLlistaPokemon(): Promise<void> {
 // ==========================================================
 // EXERCICI 2: Cercador en temps real
 // ==========================================================
-// TODO: Implementa la lògica de l'exercici 2 seguint els requisits
 
 function cercadorPokemon() {
     const text = input.value.trim().toLowerCase();
@@ -69,7 +67,6 @@ input.addEventListener("input", cercadorPokemon)
 // ==========================================================
 // EXERCICI 3: Detall del Pokémon, cache i crit
 // ==========================================================
-// TODO: Implementa la lògica de l'exercici 3 seguint els requisits
 
 const cachePokemon = new Map<number, Models.DetailedPokemon>();
 const llistaPokemon = document.getElementById("pokemon-list") as HTMLUListElement;
@@ -123,6 +120,7 @@ async function carregarDetallPokemon(id: number, url: string): Promise<void> {
 // ==========================================================
 // EXERCICI 4: Botons de filtre per tipus
 // ==========================================================
+
 Utils.generarBotonsTipus();
 
 
